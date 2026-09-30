@@ -1,11 +1,11 @@
 const codespaceName = import.meta.env.VITE_CODESPACE_NAME?.trim()
-const apiOrigin = codespaceName
+export const API_ORIGIN = codespaceName
   ? `https://${codespaceName}-8000.app.github.dev`
   : 'http://localhost:8000'
 
-export const API_BASE_URL = `${apiOrigin}/api`
+export const API_BASE_URL = `${API_ORIGIN}/api`
 
-function extractRecords(payload) {
+export function extractRecords(payload) {
   if (Array.isArray(payload)) {
     return payload
   }
@@ -26,17 +26,6 @@ function extractRecords(payload) {
   }
 
   throw new Error('The API returned an unsupported collection response.')
-}
-
-export async function fetchCollection(resource, { signal } = {}) {
-  const collection = resource.replace(/^\/+|\/+$/g, '')
-  const response = await fetch(`${API_BASE_URL}/${collection}/`, { signal })
-
-  if (!response.ok) {
-    throw new Error(`Request failed with status ${response.status}.`)
-  }
-
-  return extractRecords(await response.json())
 }
 
 export function formatReference(value) {

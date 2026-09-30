@@ -1,6 +1,3 @@
-import { useEffect, useState } from 'react'
-import { fetchCollection } from '../api.js'
-
 function displayValue(value) {
   if (value === null || value === undefined || value === '') {
     return '—'
@@ -17,43 +14,8 @@ function displayValue(value) {
   return String(value)
 }
 
-function CollectionPage({ title, eyebrow, description, resource, columns }) {
-  const [records, setRecords] = useState([])
-  const [error, setError] = useState('')
-  const [loading, setLoading] = useState(true)
-  const [refreshing, setRefreshing] = useState(false)
-  const [reloadKey, setReloadKey] = useState(0)
-  const isBusy = loading || refreshing
-
-  useEffect(() => {
-    const controller = new AbortController()
-
-    fetchCollection(resource, { signal: controller.signal })
-      .then((collection) => {
-        setRecords(collection)
-        setError('')
-      })
-      .catch((requestError) => {
-        if (requestError.name !== 'AbortError') {
-          setError(requestError.message || 'Unable to load this collection.')
-        }
-      })
-      .finally(() => {
-        if (!controller.signal.aborted) {
-          setLoading(false)
-          setRefreshing(false)
-        }
-      })
-
-    return () => controller.abort()
-  }, [resource, reloadKey])
-
-  function refresh() {
-    setRefreshing(true)
-    setError('')
-    setReloadKey((value) => value + 1)
-  }
-
+function CollectionPage({ title, eyebrow, description, resource, columns, records, error, loading, onRefresh }) {
+  const isBusy = loading
   return (
     <section aria-busy={isBusy}>
       <div className="page-heading">
@@ -74,7 +36,7 @@ function CollectionPage({ title, eyebrow, description, resource, columns }) {
           <button
             className="btn btn-sm refresh-button"
             disabled={isBusy}
-            onClick={refresh}
+            onClick={onRefresh}
             type="button"
           >
             <span aria-hidden="true">↻</span> Refresh
@@ -87,7 +49,7 @@ function CollectionPage({ title, eyebrow, description, resource, columns }) {
               <strong>Could not load {title.toLowerCase()}.</strong>
               <p>{error}</p>
             </div>
-            <button className="btn btn-sm btn-outline-danger" onClick={refresh} type="button">
+            <button className="btn btn-sm btn-outline-danger" onClick={onRefresh} type="button">
               Try again
             </button>
           </div>

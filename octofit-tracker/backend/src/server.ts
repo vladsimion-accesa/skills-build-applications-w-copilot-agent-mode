@@ -1,8 +1,12 @@
 import express, { ErrorRequestHandler } from 'express';
 import mongoose from 'mongoose';
-import { apiBaseUrl } from './config/api';
 import { connectDatabase } from './config/database';
 import apiRouter from './routes';
+
+const codespaceName = process.env.CODESPACE_NAME;
+const apiBaseUrl = codespaceName
+  ? `https://${codespaceName}-8000.app.github.dev`
+  : 'http://localhost:8000';
 
 const app = express();
 const port = 8000;

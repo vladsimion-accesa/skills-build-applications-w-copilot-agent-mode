@@ -1,4 +1,7 @@
 :root {
+  color: #183b35;
+  background: #f3f6f1;
+  font-family: 'Avenir Next', Avenir, 'Trebuchet MS', sans-serif;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -8,4 +11,6 @@
 body {
   margin: 0;
   min-width: 320px;
+  min-height: 100vh;
+  background: #f3f6f1;
 }

@@ -1,4 +1,20 @@
-# React + Vite
+# OctoFit Tracker frontend
+
+React 19 presentation tier for OctoFit Tracker, built with Vite, React Router, and Bootstrap.
+
+## API configuration
+
+When running in Codespaces, define `VITE_CODESPACE_NAME` in `octofit-tracker/frontend/.env.local` with the value of the Codespace name. For example:
+
+```dotenv
+VITE_CODESPACE_NAME=your-codespace-name
+```
+
+The frontend then requests `https://<codespace-name>-8000.app.github.dev/api/`. If the variable is unset, API requests use `http://localhost:8000/api/` for local development. Restart the Vite server after changing environment values.
+
+## Development
+
+Run `npm run dev` from this directory, or use `npm run dev --prefix octofit-tracker/frontend` from the workspace root. The app is served on port `5173`.
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 

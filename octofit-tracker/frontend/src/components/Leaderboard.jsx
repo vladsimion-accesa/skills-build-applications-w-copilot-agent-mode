@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react'
-import { API_ORIGIN, extractRecords, formatReference } from '../api.js'
+import { extractRecords, formatReference } from '../api.js'
 import CollectionPage from './CollectionPage.jsx'
 
-const endpoint = `${API_ORIGIN}/api/leaderboard/`
+const codespaceName = import.meta.env.VITE_CODESPACE_NAME?.trim()
+const endpoint = codespaceName
+  ? `https://${codespaceName}-8000.app.github.dev/api/leaderboard/`
+  : 'http://localhost:8000/api/leaderboard/'
 
 const columns = [
   {

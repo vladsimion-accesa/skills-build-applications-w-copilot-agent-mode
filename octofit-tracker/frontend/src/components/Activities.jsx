@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react'
-import { API_ORIGIN, extractRecords, formatDate, formatReference } from '../api.js'
+import { extractRecords, formatDate, formatReference } from '../api.js'
 import CollectionPage from './CollectionPage.jsx'
 
-const endpoint = `${API_ORIGIN}/api/activities/`
+const codespaceName = import.meta.env.VITE_CODESPACE_NAME?.trim()
+const endpoint = codespaceName
+  ? `https://${codespaceName}-8000.app.github.dev/api/activities/`
+  : 'http://localhost:8000/api/activities/'
 
 const columns = [
   { label: 'Member', key: 'user', render: formatReference },
